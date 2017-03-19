@@ -47,7 +47,7 @@ public class daoImpFactory {
 //		cus.setcustomer_name(od.getcustomer().getcustomer_name());
 		nod.setcustomer(new customerDaoImp().serach(od.getcustomer()).get(0));
 		nod.setoperator(new userDaoImp().serach(od.getoperator()).get(0));
-		nod.setoperator(new userDaoImp().serach(od.getdirver()).get(0));
+		nod.setdirver(new userDaoImp().serach(od.getdirver()).get(0));
 		return nod;	  
 	  }
 }
