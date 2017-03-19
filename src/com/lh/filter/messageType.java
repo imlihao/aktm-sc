@@ -5,4 +5,6 @@ public interface messageType {
       String loginSuccess="loginsuccess";
       //CS  登陆请求
       String login="login";
+      //SC 弹出消息
+      String CahtServerMessge="chatservermessage";
 }

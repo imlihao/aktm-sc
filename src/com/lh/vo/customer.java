@@ -1,16 +1,16 @@
 package com.lh.vo;
-/**
- * 
- * @author lihao
- */
-public class customer {
+  /**
+  * 
+  * @author lihao
+  */
+  public class customer {
   private int customer_ID;
   private String customer_name;
   private String address;
   private String phone;
   private String company;
   /**
-   * @param id  主键，自动生成；
+   * @param id  主键，自动生成
    */
   public void setcustomer_ID(int id){
      	  this.customer_ID=id;

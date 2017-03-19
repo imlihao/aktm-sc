@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lh.daoImp.daoImpFactory;
+import com.lh.message.chatmessage;
+import com.lh.message.messageItype;
 import com.lh.message.msgLoginSuccess;
 import com.lh.vo.user;
 
@@ -19,7 +21,7 @@ public class messageProcess {
     	  this.message=message;
     	  
           Gson json=builder.create();
-          Itype type=json.fromJson(message, Itype.class);
+          messageItype type=json.fromJson(message, messageItype.class);
           //判错
           if(type.Itype==null){
         	  System.out.println("解析错误，没有找到操作符");
@@ -40,7 +42,7 @@ public class messageProcess {
     	
     } 
    /**
-    *登录验证 
+    *登录验证  
     */
     private void login(){
     	//TODO login
@@ -48,31 +50,25 @@ public class messageProcess {
     	 System.out.println(us.getUname()+"尝试登陆..");
     	 List<user> L=daoImpFactory.getUserDao().serach(us);
     	 if(L.isEmpty()){
-    		 //TODO 失败处理
+    		 // 失败处理
     		 System.out.println("login fail...");
     		 try {
-				this.app.sendMessage("登陆失败");
+    			 //失败消息
+    			 chatmessage cm=new chatmessage();
+    			 cm.msg="登陆失败";  	
+				 this.app.sendMessage(this.builder.create().toJson(cm));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.out.println("发送消息失败 ");
 				e.printStackTrace();
 			}
     	 }else{
-    	 try {
+    		 //成功
+    	  try {
 			this.app.sendMessage(this.builder.create().toJson(new msgLoginSuccess(L.get(0))));
-		} catch (IOException e) {
+		 } catch (IOException e) {
 			System.out.println("发送消息失败 ");
 			e.printStackTrace();
 		}
      }
     }
-}
-/**
- * 
- * @author lihao
- * 
- * 泛型，用来解析操作符
- */
-class Itype{
-	String Itype=null;
-	
 }
