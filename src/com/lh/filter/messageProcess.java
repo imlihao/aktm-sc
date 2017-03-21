@@ -34,9 +34,9 @@ public class messageProcess {
         	  System.out.println("解析错误，没有找到操作符");
         	  return;
           }
-          if(type.Itype.equals(messageType.login)&&this.app.user==null){
+          if(type.Itype!=messageType.login&&this.app.user==null){
       		System.out.println("未登录的非法请求！"+type);
-      		System.out.println("未登录的非法请求！"+type.Itype.equals(messageType.login));
+      		System.out.println("未登录的非法请求！"+type.Itype!=messageType.login);
       		System.out.println(this.app.user);
       		//return;
       	   }
@@ -75,9 +75,6 @@ public class messageProcess {
      	 user us=this.builder.create().fromJson(message, user.class);
     	 System.out.println(us.getUname()+"尝试登陆..");
     	 List<user> L=daoImpFactory.getUserDao().serach(us);
-    	 if(!L.isEmpty()&&us.getpsd().equals(L.get(0).getpsd())){
-    		 L.clear();
-    	 };
     	 if(L.isEmpty()){
     		 // 失败处理
     		 System.out.println("login fail...");
