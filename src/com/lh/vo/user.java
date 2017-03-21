@@ -5,7 +5,7 @@ public class user {
    private long UID;
    private String psd;
    private int status;
-   private String CarID=null;
+   private String CarID;
    public void setCarID(String CarID){
 	   this.CarID=CarID;
    }

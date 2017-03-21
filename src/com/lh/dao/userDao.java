@@ -10,4 +10,5 @@ public interface userDao {
    public List<user> serach(user od);
    public boolean insert(user user);
    public boolean delete(user user);
+   public boolean update(user user);
 }

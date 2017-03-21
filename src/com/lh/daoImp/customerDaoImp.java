@@ -16,7 +16,7 @@ public class customerDaoImp implements customerDao{
 	 public boolean insert(customer a){
 		 Session s=hibernateFactory.getSession();
 		 s.beginTransaction();
-		 s.saveOrUpdate(a);
+		 s.save(a);
 		 s.getTransaction().commit();
 		 s.close();
 		return true;
@@ -55,7 +55,15 @@ public class customerDaoImp implements customerDao{
  		s.close();
  		return L;
 	  }
-	 
+		@Override
+		public boolean update(customer cus) {
+			 Session s=hibernateFactory.getSession();
+			 s.beginTransaction();
+			 s.update(cus);
+			 s.getTransaction().commit();
+			 s.close();
+			return true;
+		}
 	 @Test
 	 public void test(){
         customer cu=new customer();
@@ -76,4 +84,5 @@ public class customerDaoImp implements customerDao{
 		  System.out.println("¸öÐÔ»¯Ñ°ÕÒ:"+o.getaddress()+"  "+o.getcustomer_ID()+"  "+o.getphone());
 	    }
 	 }
+
 }

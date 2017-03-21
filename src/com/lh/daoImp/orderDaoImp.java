@@ -21,12 +21,20 @@ public class orderDaoImp implements orderDao{
   public boolean insert(order od){
 	  Session s=hibernateFactory.getSession();
 	  s.beginTransaction();
-	  s.saveOrUpdate(od);
+	  s.save(od);
 	  s.getTransaction().commit();
 	  s.close();
 	  return true;
   }
-
+  @Override
+  public boolean update(order od) {
+	  Session s=hibernateFactory.getSession();
+	  s.beginTransaction();
+	  s.update(od);
+	  s.getTransaction().commit();
+	  s.close();
+	  return true;
+  }
    @Override
    public List<order> serach() {
 	 Session s=hibernateFactory.getSession();
@@ -73,143 +81,138 @@ public class orderDaoImp implements orderDao{
 //	s.close();
 //	return L;
 //  }
+ 
   public void test2(){
-	  List<order> l=new orderDaoImp().serach();
-	  for(order o:l){
-		  System.out.println(o.getOrder_ID()+""+o.getcustomer().getcustomer_ID());
-	  }
+//	  List<order> l=new orderDaoImp().serach();
+//	  for(order o:l){
+//		  System.out.println(o.getOrder_ID()+""+o.getcustomer().getcustomer_ID());
+//	  }
+	  List<order> L11=daoImpFactory.getOrderDao().serach();
+      Gson gs=new GsonBuilder().create();
+      for(order ct:L11){
+    	
+    	  System.out.println(ct.getcustomer().getcustomer_ID());
+    	  System.out.println(ct.getcustomer().getcustomer_ID()+" "+ct.getoperator().getUID());
+    	  System.out.println(gs.toJson(daoImpFactory.Copy(ct)));
+      }
+      userDao ud=daoImpFactory.getUserDao();
+      user u=new user();
+	  user u2=new user();
+	  user u3=new user();
+	  user u4=new user();
+	  u.setUID(2013020101);
+	  u.setstatus(1);
+	  u.setpsd("123456");
+      u.setUname("操作员吴邪");
+      ud.update(u);
+      
+      u2.setUID(2013020102);
+      u2.setstatus(2);
+      u2.setpsd("123456");
+      u2.setUname("仓库操作员王胖子");
+      ud.update(u2);
+      
+      u3.setUID(2013020100);
+	  u3.setstatus(3);
+	  u3.setpsd("123456");
+      u3.setUname("司机潘子");
+      u3.setCarID("SA2001");
+      ud.update(u3);
+
+	  //模拟录入客户
+      customerDao cd=new customerDaoImp();
+	  customer c=new customer();
+	  c.setcustomer_ID(1);
+	  c.setphone("13309999222");
+	  c.setaddress("陕西省-西安-长安县");
+	  c.setcompany("中建五局");
+	  c.setcustomer_name("罗永浩");
+	  cd.update(c);
 	  
   }
+ 
   public void test(){
 	  orderDao od=new orderDaoImp();
 	  customerDao cd=new customerDaoImp();
 	  userDao ud=new userDaoImp();
 	  //模拟录入客户
 	  customer c=new customer();
-
-	  c.setphone("1300000001");
+	  c.setphone("13309999222");
 	  c.setaddress("陕西省-西安-长安县");
 	  c.setcompany("中建五局");
 	  c.setcustomer_name("罗永浩");
-	  //cd.insert(c);
-
-	  c.setphone("1300000001");
-	  c.setaddress("四川省-西安-长安县");
-	  c.setcompany("中建六局");
-	  c.setcustomer_name("二傻子");
-	 // cd.insert(c);
+	  cd.insert(c);
+	  customer c2=new customer();
+	  c2.setphone("13309988990");
+	  c2.setaddress("四川省-绵阳-盱眙");
+	  c2.setcompany("中建六局");
+	  c2.setcustomer_name("蛤蟆");
+	  cd.insert(c2);
       //模拟1 操作员 2 仓库操作员 3.司机 录入;
 	  user u=new user();
-	  u.setUID(2014020105);
+	  user u2=new user();
+	  user u3=new user();
+	  user u4=new user();
+	  u.setUID(2013020101);
 	  u.setstatus(1);
-	  u.setpsd("psdpsdpdd");
-      u.setUname("普通操作员");
-      //ud.insert(u);
+	  u.setpsd("123456");
+      u.setUname("操作员吴邪");
+      ud.insert(u);
       
-      u.setUID(2014020106);
-	  u.setstatus(2);
-	  u.setpsd("psdpsdpdd");
-      u.setUname("仓库操作员");
-     // ud.insert(u);
+      u2.setUID(2013020102);
+      u2.setstatus(2);
+      u2.setpsd("123456");
+      u2.setUname("仓库操作员王胖子");
+      ud.insert(u2);
       
-      u.setUID(2014020107);
-	  u.setstatus(3);
-	  u.setpsd("psdpsdpdd");
-      u.setUname("司机");
-      //ud.insert(u);
-      //显示
-      System.out.println("现在数据库里有：");
-      List<customer> L=cd.serach();
-      Gson gs=new GsonBuilder().create();
+      u3.setUID(2013020100);
+	  u3.setstatus(3);
+	  u3.setpsd("123456");
+      u3.setUname("司机潘子");
+      ud.insert(u3);
       
-      for(customer ct:L){
-    	  System.out.println(gs.toJson(ct));
-      }
-      List<user> L1=ud.serach();
-      for(user ct:L1){
-    	  System.out.println(gs.toJson(ct));
-      }
+      u4.setUID(2013020100);
+      u4.setstatus(4);
+      u4.setpsd("123456");
+      u4.setUname("我");
+      ud.insert(u4);
       //创建订单;
       System.out.println("创建订单：");
       order o=new order();
-      o.setOrder_ID(2);
-      c.setcustomer_ID(2);
-      o.setcustomer(c); 
-      u.setUID(2014020106);
-      o.setoperator(u);
-      u.setUID(2014020107);
-      o.setdirver(u);
+      o.setdirver(u3);
+      o.setoperator(u2);
+      o.setcustomer(c);
       o.setDetial("某某—1吨-大小-4立方，米某某2-1斤-1-3");
       o.setpos("A区-36排-12");
-      od.insert(o);
+      od.insert(o);  od.insert(o);
       List<order> L11=od.serach();
+      Gson gs=new GsonBuilder().create();
       for(order ct:L11){
-    	  System.out.println(gs.toJson(o));
+    	  System.out.println(gs.toJson(ct));
       }
-      //出库
-      System.out.println("出库：");
-      o.setorder_status(2);
-      od.insert(o);
-      List<order> L111=od.serach();
-      for(order ct:L111){
-    	  //System.out.println(gs.toJson(ct, order.class));
-      }
-      System.out.println("完成：");
-      //完成
-      o.setorder_status(3);
-      od.insert(o);
-      List<order> L1111=od.serach();
-      for(order ct:L1111){
-    	 // System.out.println(gs.toJson(ct, order.class));
-      }
+//      //出库
+//      System.out.println("出库：");
+//      o.setorder_status(2);
+//      od.insert(o);
+//      List<order> L111=od.serach();
+//      for(order ct:L111){
+//    	  //System.out.println(gs.toJson(ct, order.class));
+//      }
+//      System.out.println("完成：");
+//      //完成
+//      o.setorder_status(3);
+//      od.insert(o);
+//      List<order> L1111=od.serach();
+//      for(order ct:L1111){
+//    	 // System.out.println(gs.toJson(ct, order.class));
+//      }
   }
   @Test
   public void test3(){
-	  orderDao od=new orderDaoImp();
-	  order o=new order();
-	  o.setDetial("dsdsds");
-	  Gson gs=new GsonBuilder().create();
-	  customer su=new customer();
-	  su.setcustomer_ID(23);
-	  o.setcustomer(su);
-	  System.out.println(gs.toJson(o));
-	  List<order> L11=od.serach();
-	  o=L11.get(0);
-	 // L11.get(0).getoperator().getCarID();
-	  System.out.println(o.getOrder_ID()+""+o.getDetial()+"");
-	  //System.out.println(gs.toJson(L11));
-      for(order ct:L11){
-    	  System.out.println(gs.toJson(this.Copy(ct)));
-      }
+         order od=new order();
+         od.setOrder_ID(5);
+         daoImpFactory.getOrderDao().delete(od);
   }
-  public order Copy(order od){
-	order nod=new order();
-//	nod.setDetial(od.getDetial());
-//	nod.setorder_status(od.getorder_status());
-//	nod.setOrder_ID(od.getOrder_ID());
-//	nod.setpos(od.getpos());
-//	nod.setOrder_time(od.getOrder_time());
-//	user u=new user();
-//	u.setCarID(od.getoperator().getCarID());
-//	u.setpsd(od.getoperator().getpsd());
-//	u.setstatus(od.getoperator().getstatus());
-//	u.setUID(od.getoperator().getUID());
-//	u.setUname(od.getoperator().getUname());
-//	user d=new user();
-//	d.setCarID(od.getdirver().getCarID());
-//	d.setpsd(od.getdirver().getpsd());
-//	d.setstatus(od.getdirver().getstatus());
-//	d.setUID(od.getdirver().getUID());
-//	d.setUname(od.getdirver().getUname());
-//	customer cus=new customer();
-//	cus.setaddress(od.getcustomer().getaddress());
-//	cus.setcompany(od.getcustomer().getcompany());
-//	cus.setcustomer_ID(od.getcustomer().getcustomer_ID());
-//	cus.setphone(od.getcustomer().getphone());
-//	cus.setcustomer_name(od.getcustomer().getcustomer_name());
-	nod.setcustomer(new customerDaoImp().serach(od.getcustomer()).get(0));
-	nod.setoperator(new userDaoImp().serach(od.getoperator()).get(0));
-	nod.setoperator(new userDaoImp().serach(od.getdirver()).get(0));
-	return nod;	  
-  }
+  
+
 }

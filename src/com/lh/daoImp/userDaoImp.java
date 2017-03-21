@@ -57,5 +57,15 @@ public class userDaoImp implements userDao {
 		  return true;
 	}
 
+	@Override
+	public boolean update(user user) {
+		  Session s=hibernateFactory.getSession();
+		  s.beginTransaction();
+		  s.update(user);
+		  s.getTransaction().commit();
+		  s.close();
+		  return true;
+	}
+
 
 }

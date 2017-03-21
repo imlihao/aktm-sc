@@ -8,5 +8,6 @@ public interface orderDao {
 	   public List<order> serach();
 	   public List<order> serach(order od);
 	   public boolean insert(order od);
+	   public boolean update(order od);
 	   public boolean delete(order od);
 }

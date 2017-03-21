@@ -9,7 +9,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 @ServerEndpoint("/websocket")
 public class webApp {
-     private static CopyOnWriteArraySet<webApp> webSocketSet = new CopyOnWriteArraySet<webApp>();
+     public static CopyOnWriteArraySet<webApp> webSocketSet = new CopyOnWriteArraySet<webApp>();
      private static int onlineCount = 0;
      //与某个客户端的连接会话，需要通过它来给客户端发送数据
      private Session session;

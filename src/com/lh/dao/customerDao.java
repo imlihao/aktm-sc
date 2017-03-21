@@ -6,5 +6,6 @@ public interface customerDao {
 	   public List<customer> serach();
 	   public List<customer> serach(customer cus);
 	   public boolean insert(customer cus);
+	   public boolean update(customer cus);
 	   public boolean delete(customer cus);
 }

@@ -22,11 +22,11 @@ public class daoImpFactory {
     */
    public static order Copy(order od){
 		order nod=new order();
-//		nod.setDetial(od.getDetial());
-//		nod.setorder_status(od.getorder_status());
-//		nod.setOrder_ID(od.getOrder_ID());
-//		nod.setpos(od.getpos());
-//		nod.setOrder_time(od.getOrder_time());
+		nod.setDetial(od.getDetial());
+		nod.setorder_status(od.getorder_status());
+		nod.setOrder_ID(od.getOrder_ID());
+		nod.setpos(od.getpos());
+		nod.setOrder_time(od.getOrder_time());
 //		user u=new user();
 //		u.setCarID(od.getoperator().getCarID());
 //		u.setpsd(od.getoperator().getpsd());
